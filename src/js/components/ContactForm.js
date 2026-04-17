@@ -100,11 +100,11 @@ if(document.querySelector('.tmpl--contact .site-trunk .contact-form')){
           return false;
         }
 
-        return false;
-
-      }
         this.errors = [];
         this.loading = true;
+
+      }
+    }
   });
 
 }
