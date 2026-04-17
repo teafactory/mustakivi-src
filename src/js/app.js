@@ -1,4 +1,7 @@
 import '../sass/style.scss'
+import 'swiper/swiper-bundle.css';
+
+
 import 'svgxuse'
 import Vue from 'vue'
 window.Vue = Vue;
