@@ -847,12 +847,12 @@ ins {
     left: 0;
     bottom: 0;
     max-width: none;
-    min-height: 195px;
+    //min-height: 195px;
     border: none;
     // box-shadow: none;
   }
   @include for-phone {
-    min-height: 195px;
+    //min-height: 195px;
     border: none;
   }  
   &.visible {
@@ -895,6 +895,9 @@ ins {
   }
   .popup__image {
     margin-bottom: 20px;
+    @include for-phone {
+      margin-bottom: 0;
+    }
   }
   .popup__text {
     h1,h2,h3 {
@@ -3079,13 +3082,21 @@ ins {
         a {
           display: block;
           position: relative;    
-          padding-top: 100%;
+          aspect-ratio: 1 / 1;
+          container-type: inline-size;
         }
         img {
           position: absolute;
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+        }
+        .mustakivi-logo {
+          width: 54.28cqw;
+        }
+        .fi-logo {
+          width: 93.33cqw;
+          transform: translate(-50%, -38%);
         }
       }
     }
