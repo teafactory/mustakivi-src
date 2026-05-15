@@ -4,7 +4,7 @@ const instagramFeed = () => {
   const feed = document.querySelector('.instagram-feed');
   if (!feed) return;
 
-  const apiUrl = 'https://graph.facebook.com/v23.0/17841404205017264/media?fields=id,caption,media_type,media_url,timestamp,permalink&limit=20&access_token=EAASkR6f6ZCSwBRDN7J1vlp4H3SclJlChyRI7OnEtuPZBjnjjUayZADRISUwiB87hLlBaZAAuQYNokYhIcwbqMYg0FW2GGZCdvdHU5Qb03HsHff125RK8XyLKWMugasyTgP8JbuLbrzZBQy41yHpOuH3tNSv6AfyVJHOWy6YTBkuK6ubF40lDwXjZAA6K70bipCNixsrG8XzaFtJI1gVcF1S2OPc';
+  const apiUrl = 'https://apps.mustakivi.jp/instagram/posts.json';
 
   const escapeHtml = (value) => {
     return String(value || '')
@@ -53,12 +53,14 @@ const instagramFeed = () => {
   fetch(apiUrl)
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`Instagram API request failed: ${response.status}`);
+        throw new Error(`Instagram posts.json request failed: ${response.status}`);
       }
       return response.json();
     })
     .then((data) => {
-      const items = Array.isArray(data.data) ? data.data : [];
+      const items = Array.isArray(data)
+        ? data
+        : (Array.isArray(data.data) ? data.data : []);
       if (!items.length) return;
 
       feed.innerHTML = items.map(createMediaHtml).join('');

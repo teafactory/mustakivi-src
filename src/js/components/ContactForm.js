@@ -28,18 +28,22 @@ if(document.querySelector('.tmpl--contact .site-trunk .contact-form')){
         errors: [],
         locale: window.theme.locale ? window.theme.locale : 'ja',
         loading: false,
-        submitButton: null
+        submitButton: null,
+        submitListener: null
       }
     },
     mounted: function(){
       this.submitButton =  this.$el.querySelector('[type="submit"]');
-      $(this.$el).on('submit', this.submitForm);
+      this.submitListener = this.submitForm.bind(this);
+      this.$el.addEventListener('submit', this.submitListener, true);
+    },
+    beforeDestroy: function() {
+      if (this.submitListener) {
+        this.$el.removeEventListener('submit', this.submitListener, true);
+      }
     },
     methods: {
       submitForm: function(e) {
-   
-        this.loading = true;
-        
         let rules = {
           name: 'required|max:80', 
           name_furigana: 'required|katakana|max:80', 
@@ -81,8 +85,11 @@ if(document.querySelector('.tmpl--contact .site-trunk .contact-form')){
         const validation = new Validator(formData, rules, errorMessages);
         
         if (validation.fails()) {
-          console.log('validation failed');
-          e.preventDefault();
+          if (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+
           this.loading = false;
           this.errors = validation.errors.all();
 
@@ -93,7 +100,8 @@ if(document.querySelector('.tmpl--contact .site-trunk .contact-form')){
           return false;
         }
 
-        return false;
+        this.errors = [];
+        this.loading = true;
 
       }
     }
