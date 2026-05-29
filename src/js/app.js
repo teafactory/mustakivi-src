@@ -1,4 +1,12 @@
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
 import '../sass/style.scss'
+
+
 import 'svgxuse'
 import Vue from 'vue'
 window.Vue = Vue;

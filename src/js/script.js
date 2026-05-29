@@ -1,7 +1,3 @@
-
-import Swiper, {Autoplay, Pagination, EffectFade} from 'swiper';
-import 'swiper/swiper.scss';
-require('swiper/components/effect-fade/effect-fade.scss');
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import 'lazysizes/plugins/unveilhooks/ls.unveilhooks';
@@ -14,7 +10,9 @@ import 'jquery.easing/jquery.easing';
 import Cookies from 'js-cookie';
 import PerfectScrollbar from 'perfect-scrollbar';
 import initNotificationsPopup from './modules/notifications-popup';
+import instagramFeed from './modules/instagram-feed';
 import { lockBG, validateEmail } from './utils/functions.js';
+import Slider from './components/slider';
 // import ZoomOnHover from "vue-zoom-on-hover";
 // Vue.use(ZoomOnHover);
 
@@ -91,27 +89,25 @@ window.matchMedia || (window.matchMedia = function() {
 }());
 
 
-theme.slideshow = ()=>{
-  Swiper.use([Autoplay]);
-  Swiper.use([Pagination]);
-  Swiper.use([EffectFade]);
+// theme.slideshow = ()=>{
 
-  new Swiper('.swiper-container', {
-    speed: 1000,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true
-    },    
-    // autoplay: {
-    //   delay: 5000,
-    //   disableOnInteraction: false,
-    // },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    }   
-  });
-}
+//   new Swiper('.swiper', {
+//     speed: 1000,
+//     effect: 'fade',
+//     fadeEffect: {
+//       crossFade: true
+//     },    
+//     // autoplay: {
+//     //   delay: 5000,
+//     //   disableOnInteraction: false,
+//     // },
+//     pagination: {
+//       el: '.swiper-pagination',
+//       clickable: true,
+//     },
+//     plugins: [Autoplay, Pagination, EffectFade]
+//   });
+// }
 
 theme.lazyload = ()=>{
   lazyload();
@@ -819,7 +815,7 @@ if (window.matchMedia('(max-width: 600px)').matches) {
   
   $('.resp-slider-container').each((i,elem)=>{
 
-    $(elem).addClass('swiper-container');
+    $(elem).addClass('swiper');
     $(elem).find('.resp-slider-wrapper').addClass('swiper-wrapper');
     $(elem).find('.resp-slider-slide').addClass('swiper-slide');
 
@@ -828,74 +824,12 @@ if (window.matchMedia('(max-width: 600px)').matches) {
 }
 
 
-Swiper.use([Autoplay]);
-Swiper.use([Pagination]);
-Swiper.use([EffectFade]);  
+const swiperElements = document.querySelectorAll('.swiper:not(.swiper--custom)');
 
-$('.swiper-container').each((i,elem)=>{
+if (swiperElements) {
+  Slider({selector: swiperElements});
+}
 
-  let swiperOption = {
-    speed: 500,
-    //loop: true, 
-    //spaceBetween: 40,
-    pagination: {
-      el: $(elem).find('.swiper-pagination').get(0),
-      clickable: true,
-    },
-    breakpoints: {
-      900: {
-        shortSwipes: false,
-        simulateTouch: false,
-      }
-    }
-  }
-
-  let elemID = 'swiper-' + (i+1);
-  $(elem).attr('id', elemID);
-
-  const loop = $(elem).data('swiper-loop');
-  const spaceBetween = $(elem).data('swiper-space');
-  const thumbnails = $(elem).data('swiper-thumbnails');
-  const effect = $(elem).data('swiper-effect')
-  const autoplay = $(elem).data('swiper-auto')
-  const direction = $(elem).data('swiper-direction')
-
-  if(loop) swiperOption.loop = loop;
-
-  if(spaceBetween) swiperOption.spaceBetween = spaceBetween;
-
-  if(direction) swiperOption.direction = direction;
-
-  if(autoplay){
-    swiperOption.autoplay = {
-      delay: 5000,
-      disableOnInteraction: true,
-    }    
-  }
-
-  if(effect){
-    swiperOption.effect = effect;
-    if(effect == 'fade') {
-      swiperOption.fadeEffect = {
-        crossFade: true
-      }   
-    }
-  } 
-
-  if($(elem).find('.swiper-slide').length > 1){
-    
-    const swiper = new Swiper('#' + elemID, swiperOption);
-
-    if(thumbnails) {
-      $(thumbnails).find('.swiper-tn-button').on('click', (e)=>{
-        let index = $(e.currentTarget).parent().index();
-        swiper.slideTo(index);
-      })
-    }
-
-  }
-
-});
 
 
 const snScroll = new PerfectScrollbar('#mobile-site-nav_scroll-contents', {
@@ -961,3 +895,5 @@ $(document)
       });
     }, 0);
   });
+
+instagramFeed();
