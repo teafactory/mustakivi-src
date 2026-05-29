@@ -824,11 +824,7 @@ ins {
     border: none;
     //box-shadow: none;
     transform: translateX(-50%);
-<<<<<<< HEAD
-  }    
-=======
   }   
->>>>>>> home-update-2026-04
   &:has(.notifications-popup.visible),
   &:has(.newsletter-popup.visible) {
     display: flex;
@@ -854,20 +850,12 @@ ins {
     left: 0;
     bottom: 0;
     max-width: none;
-<<<<<<< HEAD
-    //min-height: 195px;
-=======
     // min-height: 195px;
->>>>>>> home-update-2026-04
     border: none;
     // box-shadow: none;
   }
   @include for-phone {
-<<<<<<< HEAD
-    //min-height: 195px;
-=======
     // min-height: 195px;
->>>>>>> home-update-2026-04
     border: none;
   }  
   &.visible {
@@ -1818,7 +1806,7 @@ ins {
 	text-align: center;
   .close-modal-button {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     position: fixed;
     right: 24px;
     top: 24px;
@@ -4888,6 +4876,9 @@ table {
     font-size: 14px !important;
     text-transform: uppercase !important;
   }
+  .ws_Product_Button {
+    border-radius: 100px !important;
+  }
 }
 
 .evm-also-bought-products {
@@ -5125,7 +5116,7 @@ table {
   .post__header {
     display: flex;
     flex-wrap: wrap;
-    align-items: end;
+    align-items: flex-end;
     position: relative;
     margin-bottom: 72px;
     padding-bottom: 12px;   

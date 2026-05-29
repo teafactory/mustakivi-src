@@ -131,9 +131,9 @@ function Slider({ selector = '.swiper', options = null }) {
       }
       if( effect === 'fade' ) {
         swiperOptions.effect = 'fade';
-        // swiperOptions.fadeEffect = {
-        //   crossFade: true,
-        // };
+        swiperOptions.fadeEffect = {
+          crossFade: true,
+        };
       }
       if (direction === 'vertical') {
         swiperOptions.direction = 'vertical';
