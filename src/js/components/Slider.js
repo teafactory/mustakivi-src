@@ -1,21 +1,5 @@
-import Swiper, {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  EffectFade,
-  Autoplay,
-  EffectCoverflow,
-} from 'swiper';
-
-Swiper.use([
-  Navigation,
-  Pagination,
-  Scrollbar,
-  EffectFade,
-  Autoplay,
-  EffectCoverflow,
-]);
-
+import Swiper from 'swiper';
+import { Autoplay, EffectFade, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 
 function Slider({ selector = '.swiper', options = null }) {
   let elements = [];
@@ -49,6 +33,7 @@ function Slider({ selector = '.swiper', options = null }) {
     const thumbnails = getValue('thumbnails');
 
     let swiperOptions = {};
+
 
     if (options) {
       swiperOptions = options;
@@ -101,10 +86,10 @@ function Slider({ selector = '.swiper', options = null }) {
     // });
 
       swiperOptions = {
-        speed,
-        slidesPerView,
-        spaceBetween,
-        loop,
+        speed: speed,
+        slidesPerView: slidesPerView,
+        spaceBetween: spaceBetween,
+        loop: loop,
         navigation: {
           nextEl: nextButton,
           prevEl: prevButton,
@@ -120,7 +105,8 @@ function Slider({ selector = '.swiper', options = null }) {
             slidesPerView: slidesPerViewLg,
             spaceBetween: spaceBetweenLg,
           },
-        }
+        },
+        modules: [Navigation, Pagination, Scrollbar, Autoplay, EffectFade],
       };
 
       if(scrollBar) {
@@ -129,7 +115,7 @@ function Slider({ selector = '.swiper', options = null }) {
           draggable: true,
         };
       }
-      
+
       if(pagination) {
         swiperOptions.pagination = {
           el: pagination,
@@ -140,14 +126,14 @@ function Slider({ selector = '.swiper', options = null }) {
       if (auto) {
         swiperOptions.autoplay = {
           delay: autoDelay,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         };
       }
       if( effect === 'fade' ) {
         swiperOptions.effect = 'fade';
-        swiperOptions.fadeEffect = {
-          crossFade: true,
-        };
+        // swiperOptions.fadeEffect = {
+        //   crossFade: true,
+        // };
       }
       if (direction === 'vertical') {
         swiperOptions.direction = 'vertical';

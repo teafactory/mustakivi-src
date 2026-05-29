@@ -64,7 +64,14 @@ const instagramFeed = () => {
       if (!items.length) return;
 
       feed.innerHTML = items.map(createMediaHtml).join('');
-      new Slider('.instagram-feed__slider');
+      //Slider('.instagram-feed__slider');
+
+      const swiperElements = document.querySelectorAll('.instagram-feed__slider');
+
+      if (swiperElements) {
+        Slider({selector: swiperElements});
+      }
+
     })
     .catch((error) => {
       console.error(error);

@@ -1862,14 +1862,18 @@ ins {
 
 .swiper {
   position: relative;
+  overflow: visible;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
   display: none;
+  svg {
+    display: none;
+  }
 }
 
-.swiper-container-initialized {
+.swiper-initialized {
   .swiper-button-prev,
   .swiper-button-next {
     display: block;
@@ -2899,7 +2903,9 @@ ins {
         opacity: 1;
         .post__tn {
           img {
-            transform: scale(1.05);
+            @media (hover: hover) {
+              transform: scale(1.05);
+            }
           }
         }
       }
@@ -2937,9 +2943,13 @@ ins {
       overflow: hidden;
       display: flex;
       height: 100%;
+      aspect-ratio: 840 / 560;
       img {
         display: block;
         transition: transform 0.5s;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
     .post__info {
@@ -2985,11 +2995,17 @@ ins {
     }
     .swiper-wrapper {
       padding-bottom: 0;
+      align-items: normal;
+    }
+    .swiper-slide {
+      height: auto !important;
     }
     .swiper-pagination {
       display: flex;
       justify-content: flex-end;
       gap: 8px;
+      left: auto;
+      right: $containerPD;
       @include for-md-tablet {
         right: $smContainerPD;
         top: 60vw;

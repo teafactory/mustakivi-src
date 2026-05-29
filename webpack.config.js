@@ -1,7 +1,7 @@
 const path = require('path');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const { VueLoaderPlugin } = require('vue-loader');
@@ -17,18 +17,19 @@ module.exports = {
     filename: 'assets/app.js'
   },
 
-  mode: "development",
-  //devtool: 'source-map',
+  mode: 'development',
+  // devtool: 'source-map',
   resolve: {
     alias: {
-        'vue$': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js',
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
-  devServer: { //開発環境のlocalhostを開く
-    contentBase: path.join(__dirname, 'dist'),//開く場所のフォルダ名
-    watchContentBase: true,//ファイルを編集した場合自動でリロードするか,
-    open: true//コマンド入力時に自動でウインドウを開く
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    open: true,
   },
   
   watch: true,
@@ -58,24 +59,43 @@ module.exports = {
           exclude: /node_modules/,
       },
       {
-        test: /\.(scss|css)$/i,
+        test: /\.css$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-          },          
-          //'style-loader',
+          },
           {
             loader: 'css-loader',
             options: { url: false }
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
-              plugins: [
-                require("autoprefixer")
-              ]
+              postcssOptions: {
+                plugins: [require('autoprefixer')],
+              },
             }
-          },  
+          },
+        ]
+      },
+      {
+        test: /\.scss$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+            options: { url: false }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('autoprefixer')],
+              },
+            }
+          },
           'sass-loader'
         ]
       },    
@@ -121,12 +141,9 @@ module.exports = {
     new VueLoaderPlugin(),
   ],
   optimization: {
-    //圧縮方法（圧縮に使うプラグイン）を変更
     minimizer: [
-      //JavaScript 用の圧縮プラグイン
-      new TerserPlugin({}), 
-      //CSS 用の圧縮プラグイン
-      new OptimizeCSSAssetsPlugin({})
+      new TerserPlugin({}),
+      new CssMinimizerPlugin(),
     ],
   },  
 };
